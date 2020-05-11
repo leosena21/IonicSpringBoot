@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CategoriaService } from '../services/domain/categoria.service';
-import { CategoriaDTO } from '../models/categoria.dto';
-import { API_CONFIG } from '../config/api.config';
+import { CategoriaService } from '../../services/domain/categoria.service';
+import { CategoriaDTO } from '../../models/categoria.dto';
+import { API_CONFIG } from '../../config/api.config';
 
 @Component({
   selector: 'app-categorias',
