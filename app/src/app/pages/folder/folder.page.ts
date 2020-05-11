@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, MenuController } from '@ionic/angular';
 import { CredenciaisDTO } from 'src/app/models/credenciais.dto';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-folder',
@@ -16,7 +17,11 @@ export class FolderPage implements OnInit {
     senha: ""
   }
 
-  constructor(private activatedRoute: ActivatedRoute, private navCtrl: NavController, private menu: MenuController) { }
+  constructor(
+    private activatedRoute: ActivatedRoute, 
+    private navCtrl: NavController, 
+    private menu: MenuController,
+    public auth: AuthService) { }
 
   ionViewWillEnter(){
     this.menu.swipeGesture(false);
@@ -31,8 +36,12 @@ export class FolderPage implements OnInit {
   }
 
   login(){
-    console.log(this.creds);
-    this.navCtrl.navigateForward("categorias");
+    this.auth.authenticate(this.creds)
+      .subscribe(response => {
+        console.log(response.headers.get('Authorization'));
+        this.navCtrl.navigateForward("categorias");
+      },
+      error => {});
   }
 
 }
