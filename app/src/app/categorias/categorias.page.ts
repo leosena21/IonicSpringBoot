@@ -25,9 +25,7 @@ export class CategoriasPage implements OnInit {
       .subscribe(response => {
         this.items = response;
       },
-      error => {
-        console.log(error);
-      });
+      error => { });
   }
 
 
