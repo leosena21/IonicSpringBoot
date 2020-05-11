@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CategoriaService } from '../services/domain/categoria.service';
+import { CategoriaDTO } from '../models/categoria.dto';
+import { API_CONFIG } from '../config/api.config';
 
 @Component({
   selector: 'app-categorias',
@@ -8,6 +10,9 @@ import { CategoriaService } from '../services/domain/categoria.service';
   styleUrls: ['./categorias.page.scss'],
 })
 export class CategoriasPage implements OnInit {
+
+  bucketUrl: string = API_CONFIG.bucketBaseUrl;
+  items: CategoriaDTO[];
 
   constructor(
     private navCtrl: NavController,
@@ -18,7 +23,7 @@ export class CategoriasPage implements OnInit {
     console.log("OK");
     this.categoriaService.findAll()
       .subscribe(response => {
-        console.log(response);
+        this.items = response;
       },
       error => {
         console.log(error);
