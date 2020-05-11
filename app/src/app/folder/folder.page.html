@@ -1,0 +1,20 @@
+<ion-app>
+  <ion-content padding>
+    <h3>Sistema de pedido</h3>
+  
+    <img src="/assets/img/tela-inicial.png" alt="logo">
+  
+    <form>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input type="text" placeholder="Digite seu email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Senha</ion-label>
+        <ion-input type="password" placeholder="Digite sua senha"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="login()">Entrar</ion-button>
+    </form>
+    <ion-button expand="block" fill="outline">Registrar</ion-button>
+  </ion-content>
+</ion-app>
