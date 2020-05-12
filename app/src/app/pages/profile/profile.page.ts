@@ -22,7 +22,6 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     let localUser = this.storage.getLocalUser();
-    console.log(localUser);
     if(localUser && localUser.email){
       this.clienteService.findByEmail(localUser.email)
         .subscribe(response => {
