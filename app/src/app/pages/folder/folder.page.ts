@@ -61,6 +61,10 @@ export class FolderPage implements OnInit {
       });
   }
 
+  signup(){
+    this.navCtrl.navigateForward("signup");
+  }
+
   async handle401(){ //POG MEU BACKEND TÁ RETORNANDO 403, O TRATAMENTO DEVERIA SER REALIZADO NO interceptor(error-interceptor)
     const alert =  await this.alertCtrl.create({
       subHeader: 'Erro 401: falha de autenticação',
