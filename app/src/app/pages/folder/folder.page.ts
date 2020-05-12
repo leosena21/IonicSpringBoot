@@ -32,6 +32,15 @@ export class FolderPage implements OnInit {
     this.menu.swipeGesture(true);
   }
 
+  ionViewDidEnter(){
+    this.auth.refreshToken()
+    .subscribe(response => {
+      this.auth.sucessfullLogin(response.headers.get('Authorization'));
+      this.navCtrl.navigateRoot("categorias");
+    },
+    error => {});
+  }
+
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
   }
@@ -40,7 +49,7 @@ export class FolderPage implements OnInit {
     this.auth.authenticate(this.creds)
       .subscribe(response => {
         this.auth.sucessfullLogin(response.headers.get('Authorization'));
-        this.navCtrl.navigateForward("categorias");
+        this.navCtrl.navigateRoot("categorias");
       },
       error => {
         this.handle401();
