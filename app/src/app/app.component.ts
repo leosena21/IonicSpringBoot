@@ -4,6 +4,9 @@ import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { StorageService } from './services/storage.service';
+import { ClienteService } from './services/domain/cliente.service';
+import { ClienteDTO } from './models/cliente.dto';
+import { API_CONFIG } from './config/api.config';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +14,9 @@ import { StorageService } from './services/storage.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  email: string;
+  
+  cliente: ClienteDTO;
+
   public selectedIndex = 0;
   public appPages = [
     {
@@ -52,7 +57,8 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private navCtrl: NavController,
-    public storage: StorageService
+    public storage: StorageService,
+    public clienteService: ClienteService
   ) {
     this.initializeApp();
   }
@@ -71,8 +77,22 @@ export class AppComponent implements OnInit {
     }
 
     let localUser = this.storage.getLocalUser();
+    console.log(localUser);
     if(localUser && localUser.email){
-      this.email = localUser.email;
+      this.clienteService.findByEmail(localUser.email)
+        .subscribe(response => {
+          this.cliente = response;
+          this.getImageIfExist();
+        },
+        error => {});
     }
+  }
+
+  getImageIfExist(){
+    this.clienteService.getImageFromBucket(this.cliente.id)
+      .subscribe(response => {
+        this.cliente.imageUrl = `${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
+      },
+      error =>{});
   }
 }
