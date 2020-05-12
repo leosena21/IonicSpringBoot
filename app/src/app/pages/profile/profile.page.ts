@@ -28,7 +28,14 @@ export class ProfilePage implements OnInit {
           this.cliente = response;
           this.getImageIfExist();
         },
-        error => {});
+        error => {
+          if(error.status == 403){
+            this.navCtrl.navigateRoot("folder/Inbox");
+          }
+        });
+    }
+    else{
+      this.navCtrl.navigateRoot("folder/Inbox");
     }
   }
 
