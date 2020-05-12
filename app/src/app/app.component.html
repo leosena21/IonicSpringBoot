@@ -20,6 +20,14 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false" >
+            <ion-item (click)="logout()" lines="none" detail="false">
+              <ion-icon name="exit"></ion-icon>
+              <ion-label>Teste</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
         </ion-list>
 
         <ion-list id="labels-list">

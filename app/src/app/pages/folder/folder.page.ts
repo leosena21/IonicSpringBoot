@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController, MenuController, AlertController } from '@ionic/angular';
 import { CredenciaisDTO } from 'src/app/models/credenciais.dto';
 import { AuthService } from 'src/app/services/auth.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-folder',
@@ -22,7 +23,8 @@ export class FolderPage implements OnInit {
     private navCtrl: NavController, 
     private menu: MenuController,
     public auth: AuthService,
-    private alertCtrl: AlertController) { }
+    private alertCtrl: AlertController,
+    private storage: StorageService) { }
 
   ionViewWillEnter(){
     this.menu.swipeGesture(false);
@@ -33,13 +35,16 @@ export class FolderPage implements OnInit {
   }
 
   ionViewDidEnter(){
-    this.auth.refreshToken()
-    .subscribe(response => {
-      this.auth.sucessfullLogin(response.headers.get('Authorization'));
-      this.navCtrl.navigateRoot("categorias");
-    },
-    error => {});
+    if(this.storage.getLocalUser()){
+      this.auth.refreshToken()
+      .subscribe(response => {
+        this.auth.sucessfullLogin(response.headers.get('Authorization'));
+        this.navCtrl.navigateRoot("categorias");
+      },
+      error => {});
+   }
   }
+  
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');

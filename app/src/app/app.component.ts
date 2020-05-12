@@ -7,6 +7,7 @@ import { StorageService } from './services/storage.service';
 import { ClienteService } from './services/domain/cliente.service';
 import { ClienteDTO } from './models/cliente.dto';
 import { API_CONFIG } from './config/api.config';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -30,9 +31,9 @@ export class AppComponent implements OnInit {
       icon: 'paper-plane'
     },
     {
-      title: 'Favorites',
-      url: '/folder/Favorites',
-      icon: 'heart'
+      title: 'Logout',
+      url: '',
+      icon: 'exit'
     },
     {
       title: 'Archived',
@@ -58,7 +59,8 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private navCtrl: NavController,
     public storage: StorageService,
-    public clienteService: ClienteService
+    public clienteService: ClienteService,
+    public authService: AuthService
   ) {
     this.initializeApp();
   }
@@ -75,7 +77,7 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
-
+    
     let localUser = this.storage.getLocalUser();
     if(localUser && localUser.email){
       this.clienteService.findByEmail(localUser.email)
@@ -93,5 +95,10 @@ export class AppComponent implements OnInit {
         this.cliente.imageUrl = `${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
       },
       error =>{});
+  }
+
+  logout(){
+    this.authService.logout();
+    this.navCtrl.navigateRoot("folder/inbox");
   }
 }
