@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -10,16 +11,17 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+  email: string;
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Inbox',
-      url: '/folder/Inbox',
-      icon: 'mail'
+      title: 'Categorias',
+      url: '/categorias',
+      icon: 'apps'
     },
     {
-      title: 'Outbox',
-      url: '/folder/Outbox',
+      title: 'Profile',
+      url: '/profile',
       icon: 'paper-plane'
     },
     {
@@ -49,7 +51,8 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    public storage: StorageService
   ) {
     this.initializeApp();
   }
@@ -65,6 +68,11 @@ export class AppComponent implements OnInit {
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+    }
+
+    let localUser = this.storage.getLocalUser();
+    if(localUser && localUser.email){
+      this.email = localUser.email;
     }
   }
 }
