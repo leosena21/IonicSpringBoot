@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, MenuController } from '@ionic/angular';
+import { NavController, MenuController, AlertController } from '@ionic/angular';
 import { CredenciaisDTO } from 'src/app/models/credenciais.dto';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -21,7 +21,8 @@ export class FolderPage implements OnInit {
     private activatedRoute: ActivatedRoute, 
     private navCtrl: NavController, 
     private menu: MenuController,
-    public auth: AuthService) { }
+    public auth: AuthService,
+    private alertCtrl: AlertController) { }
 
   ionViewWillEnter(){
     this.menu.swipeGesture(false);
@@ -41,7 +42,23 @@ export class FolderPage implements OnInit {
         this.auth.sucessfullLogin(response.headers.get('Authorization'));
         this.navCtrl.navigateForward("categorias");
       },
-      error => {});
+      error => {
+        this.handle401();
+      });
   }
 
+  async handle401(){ //POG MEU BACKEND TÁ RETORNANDO 403, O TRATAMENTO DEVERIA SER REALIZADO NO interceptor(error-interceptor)
+    const alert =  await this.alertCtrl.create({
+      subHeader: 'Erro 401: falha de autenticação',
+      message: 'Email ou senha incorreta',
+      buttons:[
+        {
+          text: 'Ok'
+        }
+      ]
+    });
+    await alert.present();
+  }
 }
+
+

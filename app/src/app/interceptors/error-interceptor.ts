@@ -3,13 +3,14 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { StorageService } from '../services/storage.service';
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorInterceptor implements HttpInterceptor{
 
-  constructor(public storage: StorageService){
+  constructor(public storage: StorageService, public alertCtrl: AlertController){
 
   }
 
@@ -32,13 +33,47 @@ export class ErrorInterceptor implements HttpInterceptor{
           console.log(errorObj);
 
           switch(errorObj.status){
+
+            case 401:
+              this.handle401();
+              break;
+
             case 403:
               this.handle403();
               break;
+
+            default:
+              this.handleDefaultError(errorObj);
           }
 
           return throwError(errorObj);
         })) as any;
+  }
+
+  async handleDefaultError(errorObj){
+    const alert =  await this.alertCtrl.create({
+      subHeader: 'Erro ' + errorObj.status +': ' + errorObj.error,
+      message: errorObj.message,
+      buttons:[
+        {
+          text: 'Ok'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async handle401(){
+    const alert =  await this.alertCtrl.create({
+      subHeader: 'Erro 401: falha de autenticação',
+      message: 'Email ou senha incorreta',
+      buttons:[
+        {
+          text: 'Ok'
+        }
+      ]
+    });
+    await alert.present();
   }
 
   handle403(){
@@ -46,8 +81,6 @@ export class ErrorInterceptor implements HttpInterceptor{
   }
 
 }
-
-
 
 export const ErrorInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
