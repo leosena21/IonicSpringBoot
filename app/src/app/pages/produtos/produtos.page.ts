@@ -3,7 +3,6 @@ import { ProdutoDTO } from 'src/app/models/produto.dto';
 import { NavController, NavParams } from '@ionic/angular';
 import { ProdutoService } from 'src/app/services/domain/produto.service';
 import { ActivatedRoute } from '@angular/router';
-import { OutgoingMessage } from 'http';
 import { API_CONFIG } from 'src/app/config/api.config';
 
 @Component({
@@ -50,5 +49,9 @@ export class ProdutosPage implements OnInit {
       },
       error =>{});
     }
+  }
+
+  showDetail(){
+    this.navCtrl.navigateForward("produtodetail");
   }
 }

@@ -3,13 +3,13 @@
     <ion-buttons (click)="back()" slot="start">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
-    <ion-title>Categorias</ion-title>
+    <ion-title>Produtos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item button ion-button *ngFor="let item of items">
+    <ion-item button (click)="showDetail()" ion-button *ngFor="let item of items">
       <ion-thumbnail slot="start">
         <img [src]="item.imageUrl || 'assets/img/prod.jpg'">
       </ion-thumbnail>
