@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, MenuController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CidadeService } from 'src/app/services/domain/cidade.service';
 import { EstadoService } from 'src/app/services/domain/estado.service';
@@ -24,7 +24,8 @@ export class SignupPage implements OnInit {
     public cidadeService: CidadeService,
     public estadoService: EstadoService,
     public clienteService: ClienteService,
-    public alertCtrl: AlertController) { 
+    public alertCtrl: AlertController,
+    private menu: MenuController) { 
 
       this.formGroup = this.formBuilder.group({
         nome: ['Joaquim', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
@@ -46,6 +47,8 @@ export class SignupPage implements OnInit {
     }
 
   ngOnInit() {
+    this.menu.swipeGesture(false);
+    
     this.estadoService.findAll()
     .subscribe(response =>{
       this.estados = response;
@@ -55,8 +58,9 @@ export class SignupPage implements OnInit {
     error => {});
   }
 
-  ionViewDidLoad(){
 
+  ionViewDidLeave(){
+    this.menu.swipeGesture(true);
   }
 
   updateCidades(){

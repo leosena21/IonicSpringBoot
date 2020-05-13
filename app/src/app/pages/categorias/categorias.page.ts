@@ -32,4 +32,8 @@ export class CategoriasPage implements OnInit {
   ngOnInit() {
   }
 
+  showProdutos(){
+    this.navCtrl.navigateForward("produtos");
+  }
+
 }

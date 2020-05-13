@@ -9,14 +9,14 @@
 
 <ion-content>  
   <ion-list>
-    <ion-item *ngFor="let item of items">
+    <ion-item button (click)="showProdutos()" *ngFor="let item of items">
       <ion-thumbnail slot="start">
         <img src="{{bucketUrl}}/cat{{item.id}}.jpg">
       </ion-thumbnail>
       <ion-label>{{item.nome}}</ion-label>
-      <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
+      <!-- <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
         View
-      </ion-button>
+      </ion-button> -->
     </ion-item>
   </ion-list>
 </ion-content>
