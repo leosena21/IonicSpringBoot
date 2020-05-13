@@ -55,7 +55,7 @@ export class ProdutodetailPage implements OnInit {
     
     this.cartService.addProduto(produto);
 
-    this.navCtrl.navigateForward("cart");
+    this.navCtrl.navigateRoot("cart");
   }
   
 
