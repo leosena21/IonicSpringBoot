@@ -30,4 +30,8 @@ export class ProdutosPage implements OnInit {
       }
     ]
   };
+
+  back(){
+    this.navCtrl.back();
+  }
 }
