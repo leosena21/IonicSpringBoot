@@ -8,6 +8,12 @@
 </ion-header>
 
 <ion-content>  
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+    <ion-fab-button (click)="goCart()">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-list>
     <ion-item button (click)="showProdutos(item.id)" *ngFor="let item of items">
       <ion-thumbnail slot="start">

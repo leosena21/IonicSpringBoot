@@ -26,32 +26,17 @@ export class AppComponent implements OnInit {
       icon: 'apps'
     },
     {
+      title: 'Carrinho',
+      url: '/cart',
+      icon: 'cart'
+    },
+    {
       title: 'Profile',
       url: '/profile',
       icon: 'paper-plane'
     },
-    {
-      title: 'Logout',
-      url: '',
-      icon: 'exit'
-    },
-    {
-      title: 'Archived',
-      url: '/folder/Archived',
-      icon: 'archive'
-    },
-    {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
-    },
-    {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
-    }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   constructor(
     private platform: Platform,

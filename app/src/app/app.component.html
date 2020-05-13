@@ -6,7 +6,7 @@
         <ion-avatar>
           <img class="circle" [src]="cliente?.imageUrl || 'assets/img/avatar-blank.png'" />
         </ion-avatar>
-        <ion-label>
+        <ion-label class="topmenu">
           <h2 text-center>{{cliente?.nome}}</h2>
           <p text-center>{{cliente?.email}}</p>          
         </ion-label>
@@ -24,7 +24,7 @@
           <ion-menu-toggle auto-hide="false" >
             <ion-item (click)="logout()" lines="none" detail="false">
               <ion-icon name="exit"></ion-icon>
-              <ion-label>Teste</ion-label>
+              <ion-label class="logout">Logout</ion-label>
             </ion-item>
           </ion-menu-toggle>
 

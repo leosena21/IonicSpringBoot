@@ -46,4 +46,8 @@ export class CategoriasPage implements OnInit {
     this.navCtrl.navigateForward('produtos', navigationExtras);
   }
 
+  goCart(){
+    this.navCtrl.navigateRoot("cart");
+  }
+
 }
