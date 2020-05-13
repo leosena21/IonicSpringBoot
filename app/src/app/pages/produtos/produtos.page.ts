@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoDTO } from 'src/app/models/produto.dto';
-import { NavController } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
+import { ProdutoService } from 'src/app/services/domain/produto.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-produtos',
@@ -13,23 +15,24 @@ export class ProdutosPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
+    public navParams: NavParams,
+    public produtoService: ProdutoService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    let categoria_id;
 
-    this.items = [
-      {
-        id: "1",
-        nome: 'Mouse',
-        preco: 80.99
+    this.route.queryParams.subscribe(params => {
+      categoria_id = params["categoria_id"];
+    });
+
+    this.produtoService.findByCategoria(categoria_id)
+      .subscribe(response => {
+        this.items = response['content'];
       },
-      {
-        id: "2",
-        nome: 'Teclado',
-        preco: 100.00
-      }
-    ]
-  };
+      error => {});
+    }
 
   back(){
     this.navCtrl.back();
