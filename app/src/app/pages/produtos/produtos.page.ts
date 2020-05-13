@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProdutoDTO } from 'src/app/models/produto.dto';
 import { NavController, NavParams } from '@ionic/angular';
 import { ProdutoService } from 'src/app/services/domain/produto.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { API_CONFIG } from 'src/app/config/api.config';
 
 @Component({
@@ -51,7 +51,14 @@ export class ProdutosPage implements OnInit {
     }
   }
 
-  showDetail(){
-    this.navCtrl.navigateForward("produtodetail");
+  showDetail(produto_id: string){
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        produto_id: produto_id
+      }
+    };
+
+    this.navCtrl.navigateForward("produtodetail", navigationExtras);
   }
 }

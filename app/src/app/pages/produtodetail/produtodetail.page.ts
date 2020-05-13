@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoDTO } from 'src/app/models/produto.dto';
+import { NavParams, NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { ProdutoService } from 'src/app/services/domain/produto.service';
+import { API_CONFIG } from 'src/app/config/api.config';
 
 @Component({
   selector: 'app-produtodetail',
@@ -8,16 +12,42 @@ import { ProdutoDTO } from 'src/app/models/produto.dto';
 })
 export class ProdutodetailPage implements OnInit {
 
-  item: ProdutoDTO
+  item: ProdutoDTO;
 
-  constructor() { }
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private route: ActivatedRoute,
+    public produtoService: ProdutoService
+  ) { }
 
   ngOnInit() {
-    this.item ={
-      id: "1",
-      nome: "Mouse",
-      preco: 80.59
-    }
+
+    let produto_id;
+
+    this.route.queryParams.subscribe(params => {
+      produto_id = params["produto_id"];
+    });
+
+    this.produtoService.findById(produto_id)
+      .subscribe(response => {
+        this.item = response;
+        this.getImageUrlIfExist();
+      },
+      error => {});
   }
+
+  getImageUrlIfExist(){
+    this.produtoService.getImageFromBucket(this.item.id)
+      .subscribe(response => {
+        this.item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${this.item.id}.jpg`;
+      },
+      error =>{});
+  }
+
+  back(){
+    this.navCtrl.back();
+  }
+  
 
 }
