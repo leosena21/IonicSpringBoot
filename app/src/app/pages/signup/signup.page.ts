@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CidadeService } from 'src/app/services/domain/cidade.service';
+import { EstadoService } from 'src/app/services/domain/estado.service';
+import { EstadoDTO } from 'src/app/models/estado.dto';
+import { CidadeDTO } from 'src/app/models/cidade.dto';
 
 @Component({
   selector: 'app-signup',
@@ -10,10 +14,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class SignupPage implements OnInit {
 
   formGroup: FormGroup;
+  estados: EstadoDTO[];
+  cidades: CidadeDTO[];
 
   constructor(
     public navCtrl: NavController, 
-    public formBuilder: FormBuilder) { 
+    public formBuilder: FormBuilder,
+    public cidadeService: CidadeService,
+    public estadoService: EstadoService) { 
 
       this.formGroup = this.formBuilder.group({
         nome: ['Joaquim', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
@@ -35,6 +43,28 @@ export class SignupPage implements OnInit {
     }
 
   ngOnInit() {
+    this.estadoService.findAll()
+    .subscribe(response =>{
+      this.estados = response;
+      this.formGroup.controls.estadoId.setValue(this.estados[0].id);
+      this.updateCidades();
+    },
+    error => {});
+  }
+
+  ionViewDidLoad(){
+
+  }
+
+  updateCidades(){
+    let estado_id = this.formGroup.value.estadoId;
+    console.log("ESTADO ID" + estado_id);
+    this.cidadeService.findAll(estado_id)
+      .subscribe(response => {
+        this.cidades = response;
+        this.formGroup.controls.cidadeId.setValue(null);
+      },
+      error => {});
   }
   
   signupUser(){
