@@ -17,6 +17,7 @@ import { ClienteService } from './services/domain/cliente.service';
 import {AuthInterceptorProvider } from './interceptors/auth-interceptor';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProdutoService } from './services/domain/produto.service';
+import { CartService } from './services/domain/cart.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ import { ProdutoService } from './services/domain/produto.service';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    NavParams,
     CategoriaService,
     AuthInterceptorProvider,
     ErrorInterceptorProvider,
@@ -41,7 +43,7 @@ import { ProdutoService } from './services/domain/produto.service';
     StorageService,
     ClienteService, 
     ProdutoService,
-    NavParams
+    CartService
   ],
   bootstrap: [AppComponent]
 })

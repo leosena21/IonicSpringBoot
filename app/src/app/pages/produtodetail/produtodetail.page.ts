@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoDTO } from 'src/app/models/produto.dto';
 import { NavParams, NavController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProdutoService } from 'src/app/services/domain/produto.service';
 import { API_CONFIG } from 'src/app/config/api.config';
+import { CartService } from 'src/app/services/domain/cart.service';
 
 @Component({
   selector: 'app-produtodetail',
@@ -18,7 +19,8 @@ export class ProdutodetailPage implements OnInit {
     public navCtrl: NavController,
     public navParams: NavParams,
     private route: ActivatedRoute,
-    public produtoService: ProdutoService
+    public produtoService: ProdutoService,
+    public cartService: CartService
   ) { }
 
   ngOnInit() {
@@ -47,6 +49,13 @@ export class ProdutodetailPage implements OnInit {
 
   back(){
     this.navCtrl.back();
+  }
+
+  cart(produto: ProdutoDTO){
+    
+    this.cartService.addProduto(produto);
+
+    this.navCtrl.navigateForward("cart");
   }
   
 
