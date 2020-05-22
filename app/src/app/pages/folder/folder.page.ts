@@ -5,6 +5,8 @@ import { CredenciaisDTO } from 'src/app/models/credenciais.dto';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
 
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.page.html',
@@ -24,7 +26,8 @@ export class FolderPage implements OnInit {
     private menu: MenuController,
     public auth: AuthService,
     private alertCtrl: AlertController,
-    private storage: StorageService) { }
+    private storage: StorageService,
+    public backgroundMode : BackgroundMode) { }
 
   ionViewWillEnter(){
     this.menu.swipeGesture(false);
@@ -48,6 +51,15 @@ export class FolderPage implements OnInit {
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+  }
+
+  public startBackGround(){
+    this.backgroundMode.enable();
+    this.backgroundMode.on("enable").subscribe(()=>{
+      setInterval(() => {
+        console.log("GetVelocidade");
+       }, 10000);
+    });
   }
 
   login(){

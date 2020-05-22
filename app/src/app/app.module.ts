@@ -19,6 +19,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProdutoService } from './services/domain/produto.service';
 import { CartService } from './services/domain/cart.service';
 
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -43,7 +45,8 @@ import { CartService } from './services/domain/cart.service';
     StorageService,
     ClienteService, 
     ProdutoService,
-    CartService
+    CartService,
+    BackgroundMode
   ],
   bootstrap: [AppComponent]
 })
